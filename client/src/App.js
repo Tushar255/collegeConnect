@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import Home from "../src/pages/home/Home";
 import Login from "../src/pages/login/login";
 import Register from "../src/pages/login/Register";
-import Profile from "../src/pages/profile/Profile";
+// import Profile from "../src/pages/profile/Profile";
+import Profile from "./pages/profile/profv1";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
               path="/home"
               element={isAuth ? <Home /> : <Navigate to="/" />}
             />
+            <Route path="/profile" element={<profv1 />} />
             <Route
               path="/profile/:userId"
               element={isAuth ? <Profile /> : <Navigate to="/" />}
