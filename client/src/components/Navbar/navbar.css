@@ -1,0 +1,33 @@
+.sidebar {
+    height: 160px;
+    top: 50px;
+}
+
+.sidebarWrapper {
+    padding: 20px;
+}
+
+.sidebarList {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebarListItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebarListItemText {
+    text-decoration: none;
+}
+
+.sidebarListItemText:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+.sidebarIcon {
+    margin-right: 15px;
+}

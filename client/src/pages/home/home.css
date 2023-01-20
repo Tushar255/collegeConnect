@@ -1,0 +1,150 @@
+.home {
+    background-color: rgb(234, 234, 234);
+}
+
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.main {
+    margin: 20px 80px;
+    display: flex;
+}
+
+.left-panel {
+    background-color: white;
+    width: 27%;
+    height: fit-content;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.post-area {
+    margin-left: 20px;
+}
+
+.post-btm {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.post-list {
+    padding: 10px 0px;
+    background-color: white;
+    width: 700px;
+    height: fit-content;
+    min-height: 800px;
+    border-radius: 15px;
+}
+
+.right-panel {
+    margin-left: 20px;
+    width: 27%;
+}
+
+.right-top {
+    height: 430px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.friends-list {
+    height: 100px;
+    font-size: 30px;
+    padding-left: 10px;
+    padding-top: 10px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.post-unit {
+    margin: 15px;
+}
+
+.person {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.per-name {
+    font-size: 30px;
+}
+
+.per-loc {
+    font-size: 20px;
+}
+
+.post-cap {
+    font-size: 20px;
+    margin: 10px 2px;
+}
+
+.per-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    /* margin-top: 20px; */
+}
+
+.post-img {
+    width: 670px;
+    border-radius: 15px;
+    height: 600px;
+}
+
+.right-head {
+    display: flex;
+    /* position: relative; */
+    font-size: 20px;
+    align-items: center;
+}
+
+.text-l {
+    font-size: 30px;
+    font-style: bold;
+}
+
+.text-r {
+    margin-left: auto;
+    margin-right: 0px;
+}
+
+.txt-l {
+    font-size: 20px;
+    font-style: bold;
+}
+
+.ad-img {
+    width: 100%;
+    margin: 10px 0px;
+    height: 250px;
+}
+
+.right-txt {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.left-title {
+    font-size: 30px;
+    font-style: bold;
+    margin-bottom: 20px;
+}
+
+.left-txt {
+    margin: 10px 0px;
+    font-size: 20px;
+}
+
+.contact {
+    margin-top: 40px;
+    font-size: 22px;
+    line-height: 30px;
+    text-decoration: underline;
+}

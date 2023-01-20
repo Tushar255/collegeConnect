@@ -1,8 +1,10 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../../css/register.css";
 
 const Register = () => {
+    const navigate = useNavigate();
     const [input, setInput] = useState({
         firstName: "",
         lastName: "",
@@ -30,13 +32,15 @@ const Register = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ firstName, lastName, userName, email, password, picturePath })
-        });
-
-        const data = await registerResponse.json();
-
-        if (data.status !== 201) {
-            window.alert("Registration Unsuccessful!");
-        }
+        })
+            .then(response => {
+                if (response.status === 201) {
+                    window.alert("Registration Successful!");
+                    navigate("/");
+                } else {
+                    window.alert("Registration Unsuccessful!");
+                }
+            });
     };
 
     return (
@@ -46,54 +50,56 @@ const Register = () => {
                     <h1>collegeConnect</h1>
                     <p>Join us on collegeConnect</p>
                     <span>Do you have an account?</span>
-                    <button>Login</button>
+                    <Link to="/">
+                        <button>Login</button>
+                    </Link>
                 </div>
                 <div className="right">
                     <h1>Register</h1>
                     <form method="POST">
-                        <input 
-                        type="text" 
-                        name="firstName"
-                        value={input.firstName}
-                        placeholder="First-Name" 
-                        onChange={handleInput}
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={input.firstName}
+                            placeholder="First-Name"
+                            onChange={handleInput}
                         />
-                        <input 
-                        type="text" 
-                        name="lastName"
-                        value={input.lastName}
-                        placeholder="Last-Name" 
-                        onChange={handleInput}
+                        <input
+                            type="text"
+                            name="lastName"
+                            value={input.lastName}
+                            placeholder="Last-Name"
+                            onChange={handleInput}
                         />
-                        <input 
-                        type="text" 
-                        name="userName"
-                        value={input.username}
-                        placeholder="Username" 
-                        onChange={handleInput}
+                        <input
+                            type="text"
+                            name="userName"
+                            value={input.username}
+                            placeholder="Username"
+                            onChange={handleInput}
                         />
-                        <input 
-                        type="email" 
-                        name="email"
-                        value={input.email}
-                        placeholder="Email" 
-                        onChange={handleInput}
+                        <input
+                            type="email"
+                            name="email"
+                            value={input.email}
+                            placeholder="Email"
+                            onChange={handleInput}
                         />
-                        <input 
-                        type="password" 
-                        name="password"
-                        value={input.password}
-                        placeholder="Password" 
-                        onChange={handleInput}
+                        <input
+                            type="password"
+                            name="password"
+                            value={input.password}
+                            placeholder="Password"
+                            onChange={handleInput}
                         />
-                        <input 
-                        type="text" 
-                        name="picturePath"
-                        value={input.picturePath}
-                        placeholder="PicturePath" 
-                        onChange={handleInput}
+                        <input
+                            type="text"
+                            name="picturePath"
+                            value={input.picturePath}
+                            placeholder="PicturePath"
+                            onChange={handleInput}
                         />
-                        
+
                         {/* <input 
                         type="text" 
                         name="description"
