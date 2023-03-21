@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useToast, Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from "@chakra-ui/react"
+import { useToast, Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack, Box } from "@chakra-ui/react"
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ const Signup = () => {
     const [showP, setShowP] = useState(false)
     const [showCP, setShowCP] = useState(false)
     const [name, setName] = useState()
+    const [college, setCollege] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [cPassword, setCPassword] = useState()
@@ -66,7 +67,7 @@ const Signup = () => {
 
     const submitHandler = async () => {
         setLoading(true);
-        if (!name || !email || !password || !cPassword) {
+        if (!name || !email || !password || !cPassword || !college) {
             toast({
                 title: "Please fill all the fields!",
                 status: "warning",
@@ -95,7 +96,7 @@ const Signup = () => {
                     "Content-type": "application/json"
                 }
             };
-            const { data } = await axios.post("http://localhost:3002/api/user", { name, email, password, pic }, config);
+            const { data } = await axios.post("http://localhost:3002/api/user", { name, email, password, pic, college }, config);
             toast({
                 title: "Registration Successful!",
                 status: "success",
@@ -127,13 +128,24 @@ const Signup = () => {
 
     return (
         <VStack spacing="5px">
-            <FormControl id="first-name" isRequired>
-                <FormLabel>Name</FormLabel>
-                <Input
-                    placeholder="Enter your Name"
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </FormControl>
+            <Box display="flex" justifyContent={"space-between"} w="100%">
+                <FormControl id="first-name" isRequired>
+                    <FormLabel>Name</FormLabel>
+                    <Input
+                        w="90%"
+                        placeholder="Enter your Name"
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl id="college" isRequired>
+                    <FormLabel>College</FormLabel>
+                    <Input
+                        w="90%"
+                        placeholder="Enter your College"
+                        onChange={(e) => setCollege(e.target.value)}
+                    />
+                </FormControl>
+            </Box>
             <FormControl id="email" isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input

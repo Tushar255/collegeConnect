@@ -30,16 +30,40 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import CommentModal from './CommentModal'
 import { useNavigate } from 'react-router-dom'
+import UpdateProfileModal from './UpdateProfileModal'
 
 const ProfileModal = ({ user, children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const token = useSelector((state) => state.user.token)
+    const loggedUser = useSelector((state) => state.user.user)
 
     const [posts, setPosts] = useState([]);
     const [postCount, setPostCount] = useState(0);
 
+    const [name, setName] = useState()
+    const [college, setCollege] = useState()
+    const [email, setEmail] = useState()
+    const [bio, setBio] = useState()
+    const [headline, setHeadline] = useState()
+    const [friends, setFriends] = useState()
+    const [pic, setPic] = useState()
+    const [fetchAgain, setFetchAgain] = useState(false)
+
     const navigate = useNavigate();
     const toast = useToast();
+
+    const userDetails = () => {
+        setName(user.name.toUpperCase());
+        setPic(user.pic);
+        setHeadline(user.headline);
+        setFriends(user.friends.length);
+        setEmail(user.email);
+        setBio(user.bio);
+        setCollege(user.college)
+    }
+    useEffect(() => {
+        userDetails();
+    }, [fetchAgain])
 
     const getUserPosts = async () => {
         const config = {
@@ -142,44 +166,53 @@ const ProfileModal = ({ user, children }) => {
                                     <Image
                                         borderRadius="full"
                                         boxSize="150px"
-                                        src={user.pic}
-                                        alt={user.name}
+                                        src={pic}
                                         mb={2}
                                     />
                                     <Text
                                         fontSize={{ base: "28px", md: "30px" }}
                                         fontFamily="Work sans"
                                     >
-                                        {user.name.toUpperCase()}
+                                        {name}
                                     </Text>
-                                    <Box display="flex">
+                                    <Text
+                                        fontSize={{ base: "14px", md: "16px" }}
+                                        mb={3}
+
+                                    >
+                                        {headline}
+                                    </Text>
+                                    <Box display="flex" mb={1}>
                                         <Text
                                             fontSize={{ base: "28px", md: "30px" }}
-                                            fontFamily="Work sans"
+
                                         >
-                                            Friends: {user.friends.length},
+                                            Friends: {friends},
                                         </Text>
                                         <Text
                                             ml={2}
                                             fontSize={{ base: "28px", md: "30px" }}
-                                            fontFamily="Work sans"
+
                                         >
                                             Posts: {postCount}
                                         </Text>
                                     </Box>
                                     <Text
-                                        fontSize={{ base: "28px", md: "30px" }}
+                                        fontSize={{ base: "26px", md: "28px" }}
                                         fontFamily="Work sans"
                                     >
-                                        {user.email}
+                                        {email}
                                     </Text>
                                 </Box>
 
-                                {(user.bio) ? <Text
-                                    fontSize={{ base: "28px", md: "30px" }}
-                                    fontFamily="Work sans"
+                                {(bio) ? <Text
+                                    w="80%"
+                                    p={2}
+                                    align="center"
+                                    fontSize={{ base: "14px", md: "18px" }}
+
                                 >
-                                    Bio: {user.bio}
+                                    {bio}
                                 </Text> : ""
                                 }
 
@@ -191,14 +224,17 @@ const ProfileModal = ({ user, children }) => {
                                 >
                                     <Text
                                         fontSize={{ base: "28px", md: "30px" }}
-                                        fontFamily="Work sans"
+
                                     >
-                                        College: {user.college}
+                                        College: {college}
                                     </Text>
 
                                 </Box>
 
-                                <Button colorScheme={"green"}>Edit</Button>
+                                {
+                                    loggedUser === user ?
+                                        <UpdateProfileModal ifUpdate={() => setFetchAgain(!fetchAgain)} /> : ""
+                                }
                             </Box>
                         </Box>
 
@@ -213,7 +249,7 @@ const ProfileModal = ({ user, children }) => {
                             overflowY="hidden"
                         >
                             {posts.length !== 0 ?
-                                (<Stack overflowY="scroll" >
+                                (<Stack overflowY="scroll" spacing={'3'} >
                                     {posts.map((post) => (
                                         <Card
                                             w="100%"

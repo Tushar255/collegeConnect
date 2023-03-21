@@ -5,9 +5,9 @@ import bcrypt from "bcrypt"
 // Register
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password, pic } = req.body;
+        const { name, email, password, pic, college } = req.body;
 
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !college) {
             res.status(400);
             throw new Error("Please enter all the fields.");
         }
@@ -26,7 +26,8 @@ export const registerUser = async (req, res) => {
             name,
             email,
             password: passwordHash,
-            pic
+            pic,
+            college: college
         });
 
         if (user) {
@@ -104,24 +105,69 @@ export const allUsers = async (req, res) => {
 };
 
 //update
-export const bio = async (req, res) => {
-    const userId = req.user._id;
-    const {bio} = req.body
-    
-    const updatedUser = await Chat.findByIdAndUpdate(
-        userId,
-        {
-            bio
-        },
-        {
-            new: true
+export const update = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { pic, bio, headline } = req.body
+        
+        if (!bio && !headline && !pic) {
+            res.status(400);
+            throw new Error("Please enter what to update");
         }
-    )
 
-    if (!updatedUser) {
-        res.status(404);
-        throw new Error("User not found");
-    } else {
-        res.json(updatedUser);
+        let updatedUser;
+
+        if (bio && !headline && !pic) {
+            updatedUser = await User.findByIdAndUpdate(
+                userId,
+                {
+                    bio
+                },
+                {
+                    new: true
+                }
+            )
+        } else if (headline && !bio && !pic) {
+            updatedUser = await User.findByIdAndUpdate(
+                userId,
+                {
+                    headline
+                },
+                {
+                    new: true
+                }
+            )
+        } else if (pic && !bio && !headline) { 
+            updatedUser = await User.findByIdAndUpdate(
+                userId,
+                {
+                    pic: pic
+                },
+                {
+                    new: true
+                }
+            )
+        } else {
+            updatedUser = await User.findByIdAndUpdate(
+                userId,
+                {
+                    pic,
+                    headline,
+                    bio
+                },
+                {
+                    new: true
+                }
+            )
+        }
+
+        if (!updatedUser) {
+            res.status(404);
+            throw new Error("User not found");
+        } else {
+            res.json({user: updatedUser, msg: "Profile Updated!", val: true});
+        }
+    } catch (error) { 
+        res.status(500).json({ error: error.message });
     }
 }
