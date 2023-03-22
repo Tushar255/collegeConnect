@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Chat from "../models/Chat.js";
+import Message from "../models/Message.js";
 
 export const getUserFriends = async (req, res) => {
     try {
@@ -45,19 +46,6 @@ export const addRemoveFriend = async (req, res) => {
         const user = await User.findById(userId);
         const friend = await User.findById(friendId)
 
-        // const chat = await Chat.findOne({
-        //         isGroupChat: false,
-        //         $and: [
-        //             { users: { $elemMatch: { $eq: friendId } } },
-        //             { users: { $elemMatch: { $eq: userId } } }
-        //         ]
-        // })
-        // console.log(chat);
-
-        // if (chat) {
-        //         await Chat.deleteOne(chat);
-        //     }
-
         let msg = ""
 
         if (user.friends.includes(friendId)) {
@@ -75,6 +63,8 @@ export const addRemoveFriend = async (req, res) => {
             })
             if (chat) {
                 await Chat.deleteOne(chat);
+
+                await Message.deleteMany({chat: chat._id})
             }
             msg = "Friend Removed"
         } else if (friend.friendRequestList.includes(userId)) { 
