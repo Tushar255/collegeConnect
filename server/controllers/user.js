@@ -19,6 +19,33 @@ export const registerUser = async (req, res) => {
             throw new Error("User already exists!");
         }
 
+        // Regular expression to enforce college complexity
+        const collegeRegex = /^[a-zA-Z]{3,}$/;
+
+        // Check if college meets complexity requirements
+        if (!collegeRegex.test(college)) {
+            res.status(400)
+            throw new Error("College should be only alphabetic characters and minimum length 3 characters");
+        }
+
+        // Regular expression to enforce name complexity
+        const nameRegex = /^(?=(?:\S+\s*){3,20}$)[A-Za-z\s]{3,20}$/;
+
+        // Check if name meets complexity requirements
+        if (!nameRegex.test(name)) {
+            res.status(400)
+            throw new Error("Name should be only alphabetic characters and length between 3 and 20 characters");
+        }
+
+        // Regular expression to enforce password complexity
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,15}$/;
+
+        // Check if password meets complexity requirements
+        if (!passwordRegex.test(password)) {
+            res.status(400)
+            throw new Error('Password must contain at least 8 characters, including at least 1 uppercase letter, 1 lowercase letter, 1 number and atleast 1 special character.');
+        }
+
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
 
@@ -37,7 +64,7 @@ export const registerUser = async (req, res) => {
             res.status(200).json({ token, user, msg: "Registration Successfull!" });
         }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json( error.message );
     }
 }
 

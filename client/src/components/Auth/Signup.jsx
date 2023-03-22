@@ -114,10 +114,9 @@ const Signup = () => {
             navigate("/home");
         } catch (err) {
             toast({
-                title: "Error Occured!",
-                description: err.response.data.message,
+                title: err.response.data,
                 status: "error",
-                duration: 5000,
+                duration: 6000,
                 isClosable: true,
                 position: "bottom"
             });
