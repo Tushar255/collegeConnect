@@ -11,6 +11,6 @@ To use the code:-
 1. You need Node Js to be installed in your PC.
 2. Make your own MongoDB cluster by visiting their official website and copy paste the connection url to a new folder i.e .env in the server folder as MONGO_URL="link".
 3. In that folder only, set a new key-value pair as JWT_SECRET="anything you want" and then PORT=3002.
-4. Now in the terminal, change directory to client and type npm install.
-5. Now change directory to server and type node index.js.
+4. Now in the terminal, change directory to client as well as server and type npm install.
+5. Now in client directory, type "npm start" and in server directory, type "node index.js".
 6. And you are good to go :)
