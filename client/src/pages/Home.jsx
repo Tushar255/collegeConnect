@@ -26,7 +26,8 @@ const Home = () => {
             {user && <SideDrawer />}
             <Box
                 display='flex'
-                flexFlow={"row-reverse"}
+                flexFlow={{ base: "row", md: "row-reverse" }}
+                justifyContent={{ base: "stretch", md: "right" }}
                 w="100%"
                 h="91.5vh"
                 p="10px"

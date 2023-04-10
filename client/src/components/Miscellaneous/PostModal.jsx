@@ -99,7 +99,7 @@ const PostModal = () => {
         } catch (error) {
             toast({
                 title: "Error",
-                description: error.message,
+                description: error.response.data.error,
                 status: "error",
                 duration: 5000,
                 isClosable: true,

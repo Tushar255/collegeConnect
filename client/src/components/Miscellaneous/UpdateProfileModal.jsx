@@ -130,6 +130,7 @@ const UpdateProfileModal = ({ ifUpdate }) => {
                             <FormLabel>Update your Picture</FormLabel>
                             <Input
                                 type="file"
+                                mb={3}
                                 p={1.5}
                                 accept="image/*"
                                 onChange={(e) => postDetails(e.target.files[0])}

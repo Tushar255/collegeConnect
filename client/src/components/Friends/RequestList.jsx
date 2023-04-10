@@ -78,7 +78,7 @@ const RequestList = () => {
 
     return (
         <Box
-            display="flex"
+            display={{ base: "none", md: "flex" }}
             flexDir="column"
             w="30%"
             h="100%"

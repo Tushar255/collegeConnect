@@ -46,6 +46,7 @@ const CommentModal = ({ postId, handleCommentFunction }) => {
     return (
         <>
             <Button
+                size={{ base: 'xs', sm: 'sm', md: 'md' }}
                 variant='solid'
                 colorScheme='blue'
                 onClick={onOpen}

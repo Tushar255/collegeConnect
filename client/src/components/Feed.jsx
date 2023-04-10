@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Heading, Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, IconButton, Text, Image, Button, Stack, useToast } from '@chakra-ui/react'
+import { Heading, Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, IconButton, Text, Image, Button, Stack, useToast, ButtonGroup } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPosts } from '../State/PostSlice';
 import axios from 'axios';
@@ -66,13 +66,13 @@ const Feed = () => {
                 flexDir="column"
                 p={3}
                 bg="#F8F8F8"
-                w="65%"
+                w={{ base: "100%", md: "45%" }}
                 h="100%"
                 borderRadius="lg"
                 overflowY="hidden"
             >
                 {posts ?
-                    (<Stack overflowY="scroll" spacing={'10'} p={8}>
+                    (<Stack display={'flex'} alignItems={'center'} overflowY="scroll" spacing={'10'} p={{ base: 0, sm: 4 }}>
                         {posts.map((post) => (
                             <Card
                                 w="100%"
@@ -83,6 +83,8 @@ const Feed = () => {
                             >
                                 <Box
                                     display={"flex"}
+                                    // flexDir={{ base: "column", lg: "row" }}
+                                    flexDir={'column'}
                                     justifyContent="space-between"
                                 >
                                     <Box w="100%">
@@ -105,10 +107,17 @@ const Feed = () => {
                                             </Text>
                                         </CardBody>
                                     </Box>
-                                    {post.pic ? <Image
-                                        boxSize='300px'
-                                        src={post.pic}
-                                    /> : ""
+                                    {post.pic ?
+                                        <Box
+                                            display="flex"
+                                            justifyContent={"center"}
+                                        >
+                                            <Image
+                                                align={"center"}
+                                                boxSize={{ base: '350px', sm: '400px', md: '500px' }}
+                                                src={post.pic}
+                                            />
+                                        </Box> : ""
                                     }
                                 </Box>
 
@@ -116,15 +125,9 @@ const Feed = () => {
                                     display={'flex'}
                                     justifyContent='space-between'
                                 >
-                                    <Box
-                                        flexWrap='wrap'
-                                        sx={{
-                                            '& > button': {
-                                                minW: '136px',
-                                            },
-                                        }}
-                                    >
+                                    <Box>
                                         <Button
+                                            size={{ base: 'xs', sm: 'sm', md: 'md' }}
                                             variant='solid'
                                             mr={5}
                                             colorScheme='pink'
@@ -135,7 +138,7 @@ const Feed = () => {
                                         <CommentModal postId={post._id} handleCommentFunction={() => { }} />
                                     </Box>
 
-                                    <Button onClick={() => navigate(`/post/${post._id}`)} _hover={{ bg: "skyblue" }}>
+                                    <Button size={{ base: 'xs', sm: 'sm', md: 'md' }} onClick={() => navigate(`/post/${post._id}`)} _hover={{ bg: "skyblue" }}>
                                         <ViewIcon fontSize="2xl" m={1} />
                                     </Button>
                                 </CardFooter>
