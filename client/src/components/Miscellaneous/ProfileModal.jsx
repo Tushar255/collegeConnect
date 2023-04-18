@@ -1,41 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import {
-    Button,
     IconButton,
     useDisclosure,
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
     Image,
     Text,
-    Grid,
-    GridItem,
     Box,
     Stack,
-    Card,
-    CardHeader,
-    Flex,
-    CardBody,
-    Avatar,
-    Heading,
-    CardFooter,
     useToast,
 } from '@chakra-ui/react'
 import { ViewIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-import CommentModal from './CommentModal'
-import { useNavigate } from 'react-router-dom'
 import UpdateProfileModal from './UpdateProfileModal'
+import Posts from '../Posts'
 
 const ProfileModal = ({ user, children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const token = useSelector((state) => state.user.token)
     const loggedUser = useSelector((state) => state.user.user)
+    const friends = useSelector((state) => state.friend.friends)
 
     const [posts, setPosts] = useState([]);
     const [postCount, setPostCount] = useState(0);
@@ -45,18 +33,15 @@ const ProfileModal = ({ user, children }) => {
     const [email, setEmail] = useState()
     const [bio, setBio] = useState()
     const [headline, setHeadline] = useState()
-    const [friends, setFriends] = useState()
     const [pic, setPic] = useState()
     const [fetchAgain, setFetchAgain] = useState(false)
 
-    const navigate = useNavigate();
     const toast = useToast();
 
     const userDetails = () => {
         setName(user.name.toUpperCase());
         setPic(user.pic);
         setHeadline(user.headline);
-        setFriends(user.friends.length);
         setEmail(user.email);
         setBio(user.bio);
         setCollege(user.college)
@@ -134,6 +119,7 @@ const ProfileModal = ({ user, children }) => {
                         h="100%"
                         bg="skyblue"
                         justifyContent={"space-evenly"}
+                        alignItems={'center'}
                     >
                         <Box
                             display="flex"
@@ -142,9 +128,10 @@ const ProfileModal = ({ user, children }) => {
                             p={3}
                             alignItems="center"
                             justifyContent={"space-between"}
-                            h="100%"
+                            h="95%"
                             w="28%"
                             borderRadius="lg"
+                            boxShadow={'dark-lg'}
                         >
                             <Box
                                 display="flex"
@@ -187,7 +174,7 @@ const ProfileModal = ({ user, children }) => {
                                             fontSize={{ base: "28px", md: "30px" }}
 
                                         >
-                                            Friends: {friends},
+                                            Friends: {(friends !== undefined) ? friends.length : ""}
                                         </Text>
                                         <Text
                                             ml={2}
@@ -243,83 +230,25 @@ const ProfileModal = ({ user, children }) => {
                             flexDir="column"
                             p={3}
                             bg="#F8F8F8"
-                            w="65%"
-                            h="100%"
+                            w="55%"
+                            h="95%"
                             borderRadius="lg"
                             overflowY="hidden"
+                            boxShadow={'dark-lg'}
                         >
                             {posts.length !== 0 ?
-                                (<Stack overflowY="scroll" spacing={'3'} >
+                                (<Stack display={'flex'} alignItems={'center'} overflowY="scroll" spacing={'3'} p={{ base: 0, sm: 0 }}>
                                     {posts.map((post) => (
-                                        <Card
-                                            w="100%"
+                                        <Posts
                                             key={post._id}
-                                            bg="#E8E8E8"
-                                            px={3}
-                                            py={2}
-                                        >
-                                            <Box
-                                                display={"flex"}
-                                                justifyContent="space-between"
-                                            >
-                                                <Box w="100%">
-                                                    <CardHeader>
-                                                        <Flex spacing='4'>
-                                                            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                                                <Avatar key={post.userId._id} name={post.userId.name} src={post.userId.pic} />
-
-                                                                <Box>
-                                                                    <Heading size='sm'>{post.userId.name}</Heading>
-                                                                    <Text>Creator, Chakra UI</Text>
-                                                                </Box>
-                                                            </Flex>
-                                                        </Flex>
-                                                    </CardHeader>
-                                                    <CardBody>
-                                                        <Text as="b">{post.heading}</Text>
-                                                        <Text mt={2}>
-                                                            {post.content}
-                                                        </Text>
-                                                    </CardBody>
-                                                </Box>
-                                                {post.pic ? <Image
-                                                    boxSize='300px'
-                                                    src={post.pic}
-                                                /> : ""
-                                                }
-                                            </Box>
-
-                                            <CardFooter
-                                                display={'flex'}
-                                                justifyContent='space-between'
-                                            >
-                                                <Box
-                                                    flexWrap='wrap'
-                                                    sx={{
-                                                        '& > button': {
-                                                            minW: '136px',
-                                                        },
-                                                    }}
-                                                >
-                                                    <Button
-                                                        variant='solid'
-                                                        mr={5}
-                                                        colorScheme='pink'
-                                                        onClick={() => handleLike(post._id)}
-                                                    >
-                                                        Like
-                                                    </Button>
-
-                                                    <CommentModal postId={post._id} handleCommentFunction={() => { }}
-                                                    />
-                                                </Box>
-                                                <Button onClick={() => navigate(`/post/${post._id}`)} _hover={{ bg: "skyblue" }}>
-                                                    <ViewIcon fontSize="2xl" m={1} />
-                                                </Button>
-                                            </CardFooter>
-                                        </Card>
+                                            post={post}
+                                            handleLike={handleLike}
+                                            handleComment={() => { }}
+                                            postDetailButton={true}
+                                        />
                                     ))}
-                                </Stack>) :
+                                </Stack>)
+                                :
                                 <Text
                                     h="100%"
                                     align={"center"}
