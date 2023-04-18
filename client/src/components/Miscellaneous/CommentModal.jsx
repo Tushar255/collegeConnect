@@ -49,6 +49,7 @@ const CommentModal = ({ postId, handleCommentFunction }) => {
                 size={{ base: 'xs', sm: 'sm', md: 'md' }}
                 variant='solid'
                 colorScheme='blue'
+                _hover={{ color: 'black' }}
                 onClick={onOpen}
             >
                 Comment
