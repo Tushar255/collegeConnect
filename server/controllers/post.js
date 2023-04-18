@@ -9,19 +9,19 @@ export const createPost = async (req, res) => {
         const heading = info.heading;
         const pic = info.pic;
         const content = info.content;
+        const tags = info.tags;
 
-        // const {userId, heading, pic, content } = req.body
-
-        if (!content) {
+        if (!content || tags.length === 0) {
             res.status(400)
-            throw new Error("content is missing")
+            throw new Error("content or tag is missing")
         }
 
         const newPost = await Post.create({
             userId,
             heading,
             pic,
-            content
+            content,
+            tags
         });
 
         await Post.findOne({ _id: newPost._id }).populate("userId", "-password");
@@ -136,5 +136,15 @@ export const postDetail = async (req, res) => {
         res.status(200).json({post: post});
     } catch (error) {
         res.status(400).json({msg: error.message});
+    }
+}
+
+export const searchByTags = async (req, res) => {
+    const tags = req.query.tags.split(',');
+    try {
+        const posts = await Post.find({ tags: { $in: tags } }).populate("userId");
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json({ message: 'Server Error' });
     }
 }
