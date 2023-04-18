@@ -6,7 +6,7 @@ Here you can search users, send/accept/reject friend requests, remove or chat wi
 
 Chakra UI is used to build the layout.
 
-To use the code:-
+# To use the code:-
 
 1. You need Node Js to be installed in your PC.
 2. Make your own MongoDB cluster by visiting their official website and copy paste the connection url to a new folder i.e .env in the server folder as MONGO_URL="link".
