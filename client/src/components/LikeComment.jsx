@@ -2,8 +2,7 @@ import { Avatar, Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 
 const LikeComment = ({ name, users, count }) => {
-    console.log(users);
-    console.log(count);
+
     return (
         <Box
             display="flex"

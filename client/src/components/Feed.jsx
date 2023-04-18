@@ -5,28 +5,33 @@ import { setPosts } from '../State/PostSlice';
 import axios from 'axios';
 import Posts from './Posts';
 
-const Feed = () => {
+const Feed = ({ filteredPosts }) => {
     const posts = useSelector((state) => state.post.posts);
     const token = useSelector((state) => state.user.token);
     const user = useSelector((state) => state.user.user);
+
     const dispatch = useDispatch();
     const toast = useToast();
 
     const allPost = async () => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        };
+        if (filteredPosts.length === 0) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
 
-        const { data } = await axios.get("http://localhost:3002/api/post", config);
+            const { data } = await axios.get("http://localhost:3002/api/post", config);
 
-        dispatch(setPosts(data));
+            dispatch(setPosts(data));
+        } else {
+            dispatch(setPosts(filteredPosts));
+        }
     }
 
     useEffect(() => {
         allPost();
-    }, [])
+    }, [filteredPosts])
 
     const handleLike = async (postId) => {
         try {
@@ -68,11 +73,13 @@ const Feed = () => {
                 borderRadius="lg"
                 overflowY="hidden"
                 boxShadow={'dark-lg'}
+                border={'1px solid black'}
             >
                 {posts ?
-                    (<Stack display={'flex'} alignItems={'center'} overflowY="scroll" spacing={'10'} p={{ base: 0, sm: 4 }}>
+                    (<Stack display={'flex'} alignItems={'center'} overflowY="scroll" spacing={'3'} p={{ base: 0, sm: 0 }}>
                         {posts.map((post) => (
                             <Posts
+                                key={post._id}
                                 post={post}
                                 handleLike={handleLike}
                                 handleComment={() => { }}
