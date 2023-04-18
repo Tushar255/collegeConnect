@@ -11,12 +11,12 @@ const FriendList = () => {
     const token = useSelector((state) => state.user.token)
     const user = useSelector((state) => state.user.user)
     const friends = useSelector((state) => state.friend.friends)
+    const chats = useSelector((state) => state.chat.chats)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const toast = useToast();
-    const chats = useSelector((state) => state.chat.chats)
 
-    const [loadingChat, setLoadingChat] = useState("");
+    const [loadingChat, setLoadingChat] = useState(false);
 
     const getUserFriends = async () => {
         try {
@@ -36,7 +36,7 @@ const FriendList = () => {
 
     useEffect(() => {
         getUserFriends();
-    }, [])
+    }, [friends])
 
     const disConnectUser = async (friendId) => {
         try {
@@ -85,8 +85,13 @@ const FriendList = () => {
 
             const { data } = await axios.post(`http://localhost:3002/api/chat`, { userId }, config)
 
-            // if (!chats.find((c) => c._id === data._id)) dispatch(setChats([data, ...chats]))
-            !chats.find((c) => c._id === data._id) ? dispatch(setChats([data, ...chats])) : <></>
+            if (chats !== undefined) {
+                !chats.find((c) => c._id === data._id) ?
+                    dispatch(setChats([data, ...chats]))
+                    :
+                    <></>
+            }
+
 
             navigate("/chats")
             dispatch(setSelectedChat(data));
@@ -109,8 +114,8 @@ const FriendList = () => {
             flexDir="column"
             p={3}
             bg="#F8F8F8"
-            w="70%"
-            h="50%"
+            w={{ md: "90%", lg: "70%" }}
+            h={{ md: "50%", lg: "50%" }}
             mb="10"
             mr="10"
             ml="10"
@@ -147,29 +152,31 @@ const FriendList = () => {
                                         <Text fontSize={'xs'}>{friend.headline}</Text>
                                     </Box>
                                 </Flex>
+
+                                <IconButton
+                                    mt={1}
+                                    variant='ghost'
+                                    colorScheme='gray'
+                                    aria-label='See menu'
+                                    _hover={{
+                                        background: "green"
+                                    }}
+                                    icon={<ChatIcon />}
+                                    onClick={() => accessChat(friend._id)}
+                                    isLoading={loadingChat}
+                                />
+                                <IconButton
+                                    mt={1}
+                                    variant='ghost'
+                                    colorScheme='gray'
+                                    aria-label='See menu'
+                                    _hover={{
+                                        background: "red"
+                                    }}
+                                    icon={<SmallCloseIcon />}
+                                    onClick={() => disConnectUser(friend._id)}
+                                />
                             </Flex>
-                            <IconButton
-                                mt={1}
-                                variant='ghost'
-                                colorScheme='gray'
-                                aria-label='See menu'
-                                _hover={{
-                                    background: "green"
-                                }}
-                                icon={<ChatIcon />}
-                                onClick={() => accessChat(friend._id)}
-                            />
-                            <IconButton
-                                mt={1}
-                                variant='ghost'
-                                colorScheme='gray'
-                                aria-label='See menu'
-                                _hover={{
-                                    background: "red"
-                                }}
-                                icon={<SmallCloseIcon />}
-                                onClick={() => disConnectUser(friend._id)}
-                            />
                         </Box>
                     ))}
                 </Stack>

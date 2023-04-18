@@ -91,8 +91,8 @@ const RequestList = () => {
                 flexDir="column"
                 p={3}
                 bg="#F8F8F8"
-                w="70%"
-                h="50%"
+                w={{ md: "90%", lg: "70%" }}
+                h={{ md: "50%", lg: "50%" }}
                 mb="10"
                 mr="10"
                 ml="10"
@@ -130,29 +130,29 @@ const RequestList = () => {
                                             <Text fontSize={'xs'}>{request.headline}</Text>
                                         </Box>
                                     </Flex>
+                                    <IconButton
+                                        mt={1}
+                                        variant='ghost'
+                                        colorScheme='gray'
+                                        aria-label='See menu'
+                                        _hover={{
+                                            background: "green"
+                                        }}
+                                        icon={<CheckCircleIcon />}
+                                        onClick={() => acceptOrReject(request._id, true)}
+                                    />
+                                    <IconButton
+                                        mt={1}
+                                        variant='ghost'
+                                        colorScheme='gray'
+                                        aria-label='See menu'
+                                        _hover={{
+                                            background: "red"
+                                        }}
+                                        icon={<SmallCloseIcon />}
+                                        onClick={() => acceptOrReject(request._id, false)}
+                                    />
                                 </Flex>
-                                <IconButton
-                                    mt={1}
-                                    variant='ghost'
-                                    colorScheme='gray'
-                                    aria-label='See menu'
-                                    _hover={{
-                                        background: "green"
-                                    }}
-                                    icon={<CheckCircleIcon />}
-                                    onClick={() => acceptOrReject(request._id, true)}
-                                />
-                                <IconButton
-                                    mt={1}
-                                    variant='ghost'
-                                    colorScheme='gray'
-                                    aria-label='See menu'
-                                    _hover={{
-                                        background: "red"
-                                    }}
-                                    icon={<SmallCloseIcon />}
-                                    onClick={() => acceptOrReject(request._id, false)}
-                                />
                             </Box>
                         ))}
                     </Stack>
