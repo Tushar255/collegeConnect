@@ -16,8 +16,6 @@ const FriendList = () => {
     const toast = useToast();
     const chats = useSelector((state) => state.chat.chats)
 
-    const [loading, setLoading] = useState(false);
-
     const [loadingChat, setLoadingChat] = useState("");
 
     const getUserFriends = async () => {
@@ -118,6 +116,7 @@ const FriendList = () => {
             ml="10"
             borderRadius="lg"
             overflowY="hidden"
+            boxShadow={'dark-lg'}
         >
             <Text fontSize='2xl' align="center" mb="5">Friends</Text>
             {(friends !== undefined && friends.length !== 0) ? (
@@ -137,6 +136,7 @@ const FriendList = () => {
                             _hover={{
                                 backgroundSize: "100% 100%"
                             }}
+                            border={'1px solid black'}
                         >
                             <Flex spacing='4'>
                                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -144,11 +144,12 @@ const FriendList = () => {
 
                                     <Box>
                                         <Heading size='sm'>{friend.name}</Heading>
-                                        <Text>Creator, Chakra UI</Text>
+                                        <Text fontSize={'xs'}>{friend.headline}</Text>
                                     </Box>
                                 </Flex>
                             </Flex>
                             <IconButton
+                                mt={1}
                                 variant='ghost'
                                 colorScheme='gray'
                                 aria-label='See menu'
@@ -159,6 +160,7 @@ const FriendList = () => {
                                 onClick={() => accessChat(friend._id)}
                             />
                             <IconButton
+                                mt={1}
                                 variant='ghost'
                                 colorScheme='gray'
                                 aria-label='See menu'

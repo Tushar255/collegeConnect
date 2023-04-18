@@ -29,7 +29,7 @@ const Home = () => {
                 flexFlow={{ base: "row", md: "row-reverse" }}
                 justifyContent={{ base: "stretch", md: "right" }}
                 w="100%"
-                h="91.5vh"
+                h="90vh"
                 p="10px"
             >
                 <RequestList />

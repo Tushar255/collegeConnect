@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Heading, Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, IconButton, Text, Image, Button, Stack, useToast, ButtonGroup } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
+import { Box, Text, Stack, useToast } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPosts } from '../State/PostSlice';
 import axios from 'axios';
-import { ViewIcon } from '@chakra-ui/icons';
-import { useNavigate } from "react-router-dom"
-import CommentModal from './Miscellaneous/CommentModal';
+import Posts from './Posts';
 
 const Feed = () => {
     const posts = useSelector((state) => state.post.posts);
     const token = useSelector((state) => state.user.token);
     const user = useSelector((state) => state.user.user);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const toast = useToast();
 
     const allPost = async () => {
@@ -70,81 +67,21 @@ const Feed = () => {
                 h="100%"
                 borderRadius="lg"
                 overflowY="hidden"
+                boxShadow={'dark-lg'}
             >
                 {posts ?
                     (<Stack display={'flex'} alignItems={'center'} overflowY="scroll" spacing={'10'} p={{ base: 0, sm: 4 }}>
                         {posts.map((post) => (
-                            <Card
-                                w="100%"
-                                key={post._id}
-                                bg="#E8E8E8"
-                                px={3}
-                                py={2}
-                            >
-                                <Box
-                                    display={"flex"}
-                                    // flexDir={{ base: "column", lg: "row" }}
-                                    flexDir={'column'}
-                                    justifyContent="space-between"
-                                >
-                                    <Box w="100%">
-                                        <CardHeader>
-                                            <Flex spacing='4'>
-                                                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                                    <Avatar key={post.userId._id} name={post.userId.name} src={post.userId.pic} />
-
-                                                    <Box>
-                                                        <Heading size='sm'>{post.userId.name}</Heading>
-                                                        <Text>Creator, Chakra UI</Text>
-                                                    </Box>
-                                                </Flex>
-                                            </Flex>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <Text as="b">{post.heading}</Text>
-                                            <Text mt={2}>
-                                                {post.content}
-                                            </Text>
-                                        </CardBody>
-                                    </Box>
-                                    {post.pic ?
-                                        <Box
-                                            display="flex"
-                                            justifyContent={"center"}
-                                        >
-                                            <Image
-                                                align={"center"}
-                                                boxSize={{ base: '350px', sm: '400px', md: '500px' }}
-                                                src={post.pic}
-                                            />
-                                        </Box> : ""
-                                    }
-                                </Box>
-
-                                <CardFooter
-                                    display={'flex'}
-                                    justifyContent='space-between'
-                                >
-                                    <Box>
-                                        <Button
-                                            size={{ base: 'xs', sm: 'sm', md: 'md' }}
-                                            variant='solid'
-                                            mr={5}
-                                            colorScheme='pink'
-                                            onClick={() => handleLike(post._id)}
-                                        >
-                                            Like
-                                        </Button>
-                                        <CommentModal postId={post._id} handleCommentFunction={() => { }} />
-                                    </Box>
-
-                                    <Button size={{ base: 'xs', sm: 'sm', md: 'md' }} onClick={() => navigate(`/post/${post._id}`)} _hover={{ bg: "skyblue" }}>
-                                        <ViewIcon fontSize="2xl" m={1} />
-                                    </Button>
-                                </CardFooter>
-                            </Card>
+                            <Posts
+                                post={post}
+                                handleLike={handleLike}
+                                handleComment={() => { }}
+                                postDetailButton={true}
+                            />
                         ))}
-                    </Stack>) : <Text align={"center"} bg={"red"} borderRadius="lg" color="white" p={1}>No Post</Text>
+                    </Stack>)
+                    :
+                    <Text align={"center"} bg={"red"} borderRadius="lg" color="white" p={1}>No Post</Text>
                 }
             </Box>
         </>

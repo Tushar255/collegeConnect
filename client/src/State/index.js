@@ -35,12 +35,4 @@ const store = configureStore({
     })
 });
 
-
-// const store = configureStore({
-//     reducer: {
-//         user: userSlice.reducer,
-//         chat: chatSlice.reducer
-//     }
-// })
-
 export default store;

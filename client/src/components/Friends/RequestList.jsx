@@ -1,5 +1,5 @@
-import { CheckCircleIcon, CheckIcon, CloseIcon, SmallCloseIcon } from '@chakra-ui/icons'
-import { Avatar, Box, Button, Flex, Heading, IconButton, Stack, Text, useToast } from '@chakra-ui/react'
+import { CheckCircleIcon, SmallCloseIcon } from '@chakra-ui/icons'
+import { Avatar, Box, Flex, Heading, IconButton, Stack, Text, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -93,19 +93,18 @@ const RequestList = () => {
                 bg="#F8F8F8"
                 w="70%"
                 h="50%"
-                // mt="10"
+                mb="10"
                 mr="10"
                 ml="10"
                 borderRadius="lg"
                 overflowY="hidden"
+                boxShadow={'dark-lg'}
             >
                 <Text fontSize='2xl' align="center" mb="5">Requests</Text>
                 {friendRequests.length !== 0 ? (
                     <Stack overflowY="scroll">
                         {friendRequests.map((request) => (
                             <Box
-                                display="felx"
-                                justifyContent="space-between"
                                 bg={"#E8E8E8"}
                                 color={"black"}
                                 px={3}
@@ -119,6 +118,7 @@ const RequestList = () => {
                                 _hover={{
                                     backgroundSize: "100% 100%"
                                 }}
+                                border={'1px solid black'}
                             >
 
                                 <Flex spacing='4'>
@@ -127,30 +127,32 @@ const RequestList = () => {
 
                                         <Box>
                                             <Heading size='sm'>{request.name}</Heading>
-                                            <Text>Creator, Chakra UI</Text>
+                                            <Text fontSize={'xs'}>{request.headline}</Text>
                                         </Box>
                                     </Flex>
-                                    <IconButton
-                                        variant='ghost'
-                                        colorScheme='gray'
-                                        aria-label='See menu'
-                                        _hover={{
-                                            background: "green"
-                                        }}
-                                        icon={<CheckCircleIcon />}
-                                        onClick={() => acceptOrReject(request._id, true)}
-                                    />
-                                    <IconButton
-                                        variant='ghost'
-                                        colorScheme='gray'
-                                        aria-label='See menu'
-                                        _hover={{
-                                            background: "red"
-                                        }}
-                                        icon={<SmallCloseIcon />}
-                                        onClick={() => acceptOrReject(request._id, false)}
-                                    />
                                 </Flex>
+                                <IconButton
+                                    mt={1}
+                                    variant='ghost'
+                                    colorScheme='gray'
+                                    aria-label='See menu'
+                                    _hover={{
+                                        background: "green"
+                                    }}
+                                    icon={<CheckCircleIcon />}
+                                    onClick={() => acceptOrReject(request._id, true)}
+                                />
+                                <IconButton
+                                    mt={1}
+                                    variant='ghost'
+                                    colorScheme='gray'
+                                    aria-label='See menu'
+                                    _hover={{
+                                        background: "red"
+                                    }}
+                                    icon={<SmallCloseIcon />}
+                                    onClick={() => acceptOrReject(request._id, false)}
+                                />
                             </Box>
                         ))}
                     </Stack>
