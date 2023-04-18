@@ -10,8 +10,8 @@ export const getUserFriends = async (req, res) => {
             user.friends.map((id) => User.findById(id))
         );
         const formattedFriends = friends.map(
-        ({ _id, name, email, pic }) => {
-            return { _id, name, email, pic };
+        ({ _id, name, pic, headline }) => {
+            return { _id, name, pic, headline };
         }
     );
     res.status(200).json(formattedFriends)
@@ -27,8 +27,8 @@ export const getFriendRequestsList = async (req, res) => {
             user.friendRequestList.map((id) => User.findById(id))
         );
         const friendRequests = requests.map(
-            ({ _id, name, pic }) => {
-                return { _id, name, pic };
+            ({ _id, name, pic, headline }) => {
+                return { _id, name, pic, headline };
             }
         );
         res.status(200).json(friendRequests);
@@ -81,8 +81,8 @@ export const addRemoveFriend = async (req, res) => {
             user.friends.map((id) => User.findById(id))
         );
         const formattedFriends = friends.map(
-        ({ _id, name, email, pic }) => {
-            return { _id, name, email, pic };
+        ({ _id, name, headline, pic }) => {
+            return { _id, name, headline, pic };
         }
         );
 
@@ -124,8 +124,8 @@ export const acceptOrRejectRequest = async (req, res) => {
             user.friends.map((id) => User.findById(id))
         );
         const formattedFriends = friends.map(
-        ({ _id, name, email, pic }) => {
-            return { _id, name, email, pic };
+        ({ _id, name, headline, pic }) => {
+            return { _id, name, headline, pic };
         }
     );
 

@@ -105,6 +105,7 @@ export const allUsers = async (req, res) => {
 
     const filteredUser = [{
         user: null,
+        userInRequestList: null,
         isTrue: null
     }]
 
@@ -113,12 +114,21 @@ export const allUsers = async (req, res) => {
             if (user.friends.includes(req.user._id)) {
                 const val = {
                     user: user,
+                    userInRequestList: false,
                     isTrue: true
+                }
+                filteredUser.push(val);
+            } else if (req.user.friendRequestList.includes(user._id)) {
+                const val = {
+                    user: user,
+                    userInRequestList: true,
+                    isTrue: false
                 }
                 filteredUser.push(val);
             } else {
                 const val = {
                     user: user,
+                    userInRequestList: false,
                     isTrue: false
                 }
                 filteredUser.push(val);
