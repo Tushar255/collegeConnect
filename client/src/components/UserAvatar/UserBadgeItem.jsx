@@ -2,7 +2,7 @@ import { CloseIcon } from '@chakra-ui/icons'
 import { Badge } from '@chakra-ui/react'
 import React from 'react'
 
-const UserBadgeItem = ({ user, handleFunction }) => {
+const UserBadgeItem = ({ user, noCrossIcon, handleFunction }) => {
     return (
         <Badge
             px={2}
@@ -11,15 +11,18 @@ const UserBadgeItem = ({ user, handleFunction }) => {
             m={1}
             mb={2}
             variant="solid"
-            fontSize={12}
-            colorScheme="purple"
+            fontSize={{ base: '10', sm: '11', md: '12' }}
+            colorScheme="whatsapp"
+            color='black'
             cursor="pointer"
             onClick={handleFunction}
+            border={'1px solid black'}
         >
-            {user.name}
-            {/* {admin === user._id && <span>(Admin)</span>} */}
+            {typeof (user) === 'object' ? user.name : user}
 
-            <CloseIcon pl={1} />
+            {!noCrossIcon ?
+                <CloseIcon pl={1} /> : ""
+            }
         </Badge>
     )
 }

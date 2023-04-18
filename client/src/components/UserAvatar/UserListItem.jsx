@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Text } from '@chakra-ui/react';
 import React from 'react'
 
-const UserListItem = ({ isTrue, user, chatAvail, handleChatFunction, handleConnectFunction }) => {
+const UserListItem = ({ isTrue, user, addAvail, chatAvail, handleChatFunction, handleConnectFunction }) => {
     return (
         <Box
             bg="#E8E8E8"
@@ -41,7 +41,7 @@ const UserListItem = ({ isTrue, user, chatAvail, handleChatFunction, handleConne
                             Chat
                         </Button> : ""
                     }
-                    {isTrue ? <Button
+                    {(isTrue && addAvail) ? <Button
                         size='xs'
                         _hover={{ color: "black" }}
                         colorScheme="telegram"

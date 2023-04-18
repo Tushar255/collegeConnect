@@ -145,6 +145,7 @@ const SideDrawer = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 bg="white"
+                borderRadius={'10px'}
                 w="100%"
                 p="5px 10px 5px 10px"
                 borderWidth="5px"
@@ -216,6 +217,7 @@ const SideDrawer = () => {
                                     key={filteredUser.user._id}
                                     isTrue={true}
                                     user={filteredUser.user}
+                                    addAvail={!filteredUser.userInRequestList}
                                     chatAvail={filteredUser.isTrue}
                                     handleChatFunction={() => accessChat(filteredUser.user._id)}
                                     handleConnectFunction={() => connectUser(filteredUser.user._id)}
