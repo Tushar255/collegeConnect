@@ -112,132 +112,166 @@ const ProfileModal = ({ user, children }) => {
             <Modal size="full" isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
                 <ModalContent h="410px">
-                    <ModalCloseButton bg="red" color={"white"} />
+                    <ModalCloseButton bg="red" color={"black"} />
 
                     <ModalBody
                         display="flex"
-                        h="100%"
+                        flexDirection={{ base: 'column', md: 'row' }}
+                        h={{ base: "1200px", md: "100%" }}
                         bg="skyblue"
                         justifyContent={"space-evenly"}
                         alignItems={'center'}
+                        border='2px solid black'
                     >
                         <Box
+                            id='user-profile-container'
                             display="flex"
                             flexDir={"column"}
                             bg="#F8F8F8"
                             p={3}
-                            alignItems="center"
-                            justifyContent={"space-between"}
-                            h="95%"
-                            w="28%"
+                            alignItems={"center"}
+                            justifyContent={{ base: "none", md: "space-between" }}
+                            h={{ base: "50%", md: "95%" }}
+                            w={{ base: "90%", md: "28%" }}
                             borderRadius="lg"
                             boxShadow={'dark-lg'}
+                            mb={{ base: '5', md: '0' }}
                         >
                             <Box
                                 display="flex"
-                                flexDir={"column"}
+                                flexDir={{ base: "column" }}
                                 bg="#E8E8E8"
                                 p={3}
-                                alignItems="center"
-                                justifyContent={"space-between"}
-                                h="100%"
+                                alignItems={{ base: "center" }}
+                                h="90%"
                                 w="100%"
                                 borderRadius="lg"
                             >
                                 <Box
+                                    id='user-info-container'
+                                    w={{ base: "100%" }}
                                     display="flex"
-                                    flexDir={"column"}
-                                    justifyContent={"center"}
-                                    alignItems="center"
+                                    flexDir={{ base: "column", sm: "row", md: "column" }}
+                                    justifyContent={{ base: "center" }}
+                                    alignItems={{ base: "center" }}
+                                    p={2}
                                 >
                                     <Image
                                         borderRadius="full"
-                                        boxSize="150px"
+                                        boxSize={{ base: "100px", lg: "150px" }}
                                         src={pic}
                                         mb={2}
+                                        mr={2}
                                     />
-                                    <Text
-                                        fontSize={{ base: "28px", md: "30px" }}
-                                        fontFamily="Work sans"
+                                    <Box
+                                        display={'flex'}
+                                        flexDir={'column'}
+                                        justifyContent={'center'}
+                                        alignItems={'center'}
                                     >
-                                        {name}
-                                    </Text>
-                                    <Text
-                                        fontSize={{ base: "14px", md: "16px" }}
-                                        mb={3}
-
-                                    >
-                                        {headline}
-                                    </Text>
-                                    <Box display="flex" mb={1}>
                                         <Text
-                                            fontSize={{ base: "28px", md: "30px" }}
-
+                                            fontSize={{ base: "17px", md: "25px", lg: "30px" }}
+                                            fontFamily="Work sans"
                                         >
-                                            Friends: {(friends !== undefined) ? friends.length : ""}
+                                            {name}
                                         </Text>
-                                        <Text
-                                            ml={2}
-                                            fontSize={{ base: "28px", md: "30px" }}
 
+                                        {headline ? <Text
+                                            fontSize={{ base: "10px", md: "14px", lg: "16px" }}
+                                            mb={3}
                                         >
-                                            Posts: {postCount}
-                                        </Text>
+                                            {headline}
+                                        </Text> : ""}
+                                        <Box>
+                                            <Text
+                                                fontSize={{ base: "15px", md: "20px", lg: "25px" }}
+                                            >
+                                                Friends: {(friends !== undefined) ? friends.length : ""}
+                                            </Text>
+
+                                            <Text
+                                                fontSize={{ base: "15px", md: "20px", lg: "25px" }}
+                                                mb={{ base: '', sm: 'auto' }}
+                                            >
+                                                Posts: {postCount}
+                                            </Text>
+                                        </Box>
                                     </Box>
-                                    <Text
-                                        fontSize={{ base: "26px", md: "28px" }}
-                                        fontFamily="Work sans"
-                                    >
-                                        {email}
-                                    </Text>
                                 </Box>
 
-                                {(bio) ? <Text
-                                    w="80%"
-                                    p={2}
-                                    align="center"
-                                    fontSize={{ base: "14px", md: "18px" }}
-
-                                >
-                                    {bio}
-                                </Text> : ""
-                                }
-
                                 <Box
-                                    display="flex"
-                                    flexDir={"column"}
-                                    justifyContent={"center"}
+                                    display={'flex'}
+                                    flexDirection={'column'}
+                                    w={{ md: '100%' }}
+                                    h='100%'
+                                    justifyContent={"space-between"}
                                     alignItems="center"
+                                    p={2}
                                 >
-                                    <Text
-                                        fontSize={{ base: "28px", md: "30px" }}
+                                    <Box
+                                        display="flex"
+                                        mb={1}
+                                    >
+                                        <Text
+                                            fontSize={{ md: "20px", lg: "24px" }}
+                                            fontFamily="Work sans"
+                                            mr={1}
+                                        >
+                                            {email}
+                                        </Text>
+                                    </Box>
 
+                                    {(bio) ?
+                                        <Text
+                                            p={2}
+                                            align="center"
+                                            fontSize={{ base: "10px", sm: "14px", lg: "18px" }}
+                                        >
+                                            {bio}
+                                        </Text> : ""
+                                    }
+
+                                    <Text
+                                        fontSize={{ base: "14px", sm: "20px" }}
+                                        mt={{ base: '', sm: 'auto' }}
                                     >
                                         College: {college}
                                     </Text>
 
                                 </Box>
 
-                                {
-                                    loggedUser === user ?
-                                        <UpdateProfileModal ifUpdate={() => setFetchAgain(!fetchAgain)} /> : ""
-                                }
                             </Box>
+
+                            {
+                                loggedUser === user ?
+                                    <UpdateProfileModal
+                                        ifUpdate={() => setFetchAgain(!fetchAgain)}
+                                    />
+                                    : ""
+                            }
                         </Box>
 
                         <Box
+                            id='user-posts'
                             display="flex"
                             flexDir="column"
                             p={3}
                             bg="#F8F8F8"
-                            w="55%"
-                            h="95%"
+                            w={{ base: "100%", md: "45%" }}
+                            h="100%"
                             borderRadius="lg"
                             overflowY="hidden"
                             boxShadow={'dark-lg'}
+                            border={'1px solid black'}
                         >
-                            {posts.length !== 0 ?
-                                (<Stack display={'flex'} alignItems={'center'} overflowY="scroll" spacing={'3'} p={{ base: 0, sm: 0 }}>
+                            {posts ?
+                                (<Stack
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    overflowY="scroll"
+                                    spacing={'3'}
+                                    p={{ base: 0 }}
+                                >
                                     {posts.map((post) => (
                                         <Posts
                                             key={post._id}
@@ -250,9 +284,8 @@ const ProfileModal = ({ user, children }) => {
                                 </Stack>)
                                 :
                                 <Text
-                                    h="100%"
                                     align={"center"}
-                                    bg={"grey"}
+                                    bg={"red"}
                                     borderRadius="lg"
                                     color="white"
                                     p={1}
