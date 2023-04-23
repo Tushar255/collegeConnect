@@ -51,6 +51,7 @@ const CommentModal = ({ postId, handleCommentFunction }) => {
                 colorScheme='blue'
                 _hover={{ color: 'black' }}
                 onClick={onOpen}
+                border={'1px solid black'}
             >
                 Comment
             </Button>
