@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import UserBadgeItem from './UserAvatar/UserBadgeItem';
 import axios from 'axios';
 import Feed from './Feed';
+import { AddIcon } from "@chakra-ui/icons"
 
 const FilterBox = () => {
     const [selectedTags, setSelectedTags] = useState([]);
@@ -21,7 +22,7 @@ const FilterBox = () => {
                 status: "error",
                 duration: 2000,
                 isClosable: true,
-                position: "bottom-left",
+                position: "center"
             });
         }
     }
@@ -69,7 +70,7 @@ const FilterBox = () => {
                     ml="10"
                     borderRadius="lg"
                     overflowY="hidden"
-                    boxShadow={'dark-lg'}
+                    boxShadow={{ base: 'none', md: 'dark-lg' }}
                 >
                     <Text fontSize='2xl' align="center" mb={{ base: "2", md: "5" }}>Filters</Text>
                     <FormControl>
@@ -90,6 +91,7 @@ const FilterBox = () => {
                             ))}
                         </Box>
                         <Input
+                            autoComplete="off"
                             border={'1px solid black'}
                             placeholder="Add Some Tags"
                             p={1.5}
@@ -99,9 +101,9 @@ const FilterBox = () => {
                         />
                         <Box w='100%' display={'flex'} justifyContent={'center'}>
                             <Button
-                                mx={1}
+                                display={'flex'}
+                                m={1}
                                 size='xs'
-                                width={"20%"}
                                 _hover={{ color: "white" }}
                                 colorScheme="yellow"
                                 variant='solid'
@@ -111,7 +113,8 @@ const FilterBox = () => {
                                 }}
                                 border={'1px solid black'}
                             >
-                                ADD
+                                <AddIcon mr={1} />
+                                <Text as='b'>ADD</Text>
                             </Button>
                         </Box>
                     </FormControl>
