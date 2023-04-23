@@ -8,6 +8,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogin } from '../../State/UserSlice';
+import { EditIcon } from '@chakra-ui/icons';
 
 const UpdateProfileModal = ({ ifUpdate }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -107,7 +108,9 @@ const UpdateProfileModal = ({ ifUpdate }) => {
             <Button
                 onClick={onOpen}
                 colorScheme={"blue"}
+                display={'flex'}
             >
+                <EditIcon mr={3} />
                 Edit
             </Button>
 
