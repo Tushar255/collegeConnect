@@ -15,6 +15,7 @@ import {
     useToast,
     Textarea,
     Box,
+    Text,
 } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -76,10 +77,13 @@ const PostModal = () => {
                 }
             };
 
+            const linkRegex = /(https?:\/\/[^\s]+)/g;
+            const formattedText = content.replace(linkRegex, '<a href="$1" target="_blank">$1</a>');
+
             const info = {
                 userId: user._id,
                 heading: heading,
-                content: content,
+                content: formattedText,
                 pic: pic,
                 tags: selectedTags
             }
@@ -91,7 +95,7 @@ const PostModal = () => {
             toast({
                 title: data.msg,
                 status: "success",
-                duration: 3000,
+                duration: 1000,
                 isClosable: true,
                 position: "bottom"
             });
@@ -99,6 +103,7 @@ const PostModal = () => {
             setLoading(false)
             setHeading("")
             setContent("")
+            setSelectedTags([])
             onClose();
         } catch (error) {
             setLoading(false)
@@ -106,7 +111,7 @@ const PostModal = () => {
                 title: "Error",
                 description: error.response.data.error,
                 status: "error",
-                duration: 3000,
+                duration: 1000,
                 isClosable: true,
                 position: "bottom-left"
             });
@@ -135,7 +140,24 @@ const PostModal = () => {
 
     return (
         <>
-            <Button onClick={onOpen}><AddIcon fontSize="2xl" m={1} /></Button>
+            <Button p={1} mb={1} display={{ base: 'flex', md: 'none' }} onClick={onOpen} w='100%'>
+                <AddIcon
+                    fontSize="sm"
+                    m={1}
+                    mr={3}
+                    _hover={{ cursor: 'pointer', color: 'red' }}
+                />
+                <Text w='30%' align='left'>New Post</Text>
+            </Button>
+
+            <AddIcon
+                display={{ base: 'none', md: 'inline' }}
+                onClick={onOpen}
+                fontSize="md"
+                m={1}
+                mr={3}
+                _hover={{ cursor: 'pointer', color: 'red' }}
+            />
 
             <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
@@ -155,11 +177,11 @@ const PostModal = () => {
                         justifyContent="space-between"
                         alignItems="center"
                     >
-                        {/* <VStack spacing="5px"> */}
                         <FormControl id="heading">
                             <FormLabel>Heading</FormLabel>
                             <Input
                                 id='heading'
+                                autoComplete="off"
                                 placeholder="Write a Heading"
                                 value={heading}
                                 onChange={(e) => setHeading(e.target.value)}
@@ -178,7 +200,9 @@ const PostModal = () => {
                         </FormControl>
                         <FormControl id="content" isRequired>
                             <FormLabel>Content</FormLabel>
-                            <Textarea id='content'
+                            <Textarea
+                                id='content'
+                                autoComplete="off"
                                 placeholder="Write Some Content"
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
@@ -197,7 +221,8 @@ const PostModal = () => {
                                 )) : ""}
                             </Box>
                             <Input
-                                placeholder="Add Tags eg: frontend, javascript, React"
+                                placeholder="Add Tags eg: frontend, javascript, devops"
+                                autoComplete="off"
                                 p={1.5}
                                 mb={2}
                                 value={newTag}
