@@ -1,5 +1,6 @@
 import { Avatar, Box, Button, Text } from '@chakra-ui/react';
 import React from 'react'
+import ProfileModal from '../Miscellaneous/ProfileModal';
 
 const UserListItem = ({ isTrue, user, addAvail, chatAvail, handleChatFunction, handleConnectFunction }) => {
     return (
@@ -18,16 +19,30 @@ const UserListItem = ({ isTrue, user, addAvail, chatAvail, handleChatFunction, h
             mb={2}
             borderRadius="lg"
         >
-            <Avatar
-                mr={2}
-                size="sm"
-                cursor="pointer"
-                name={user.name}
-                src={user.pic}
-            />
+            <ProfileModal user={user}>
+                <Avatar
+                    mr={2}
+                    size="sm"
+                    cursor="pointer"
+                    name={user.name}
+                    src={user.pic}
+                />
+            </ProfileModal>
             <Box display="flex" justifyContent="space-between" w="100%" alignItems="center">
-                <Text>{user.name} <br /><Text pl={0.5} fontSize={"10px"}>{user.headline}</Text></Text>
-                <Box display="flex" flexDirection={"column"}>
+                <Text>
+                    {user.name}
+                    <br />
+                    <Text
+                        pl={0.5}
+                        fontSize={"10px"}
+                    >
+                        {user.headline}
+                    </Text>
+                </Text>
+                <Box
+                    display="flex"
+                    flexDirection={"column"}
+                >
 
                     {chatAvail ?
                         <Button
