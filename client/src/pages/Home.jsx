@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import SideDrawer from '../components/Miscellaneous/SideDrawer';
+import SideDrawer from '../components/Miscellaneous/Header';
 import RequestList from '../components/Friends/RequestList';
 import { setSelectedChat } from '../State/ChatSlice';
 import FilterBox from '../components/FilterBox';
@@ -27,7 +27,6 @@ const Home = () => {
             <Box
                 display='flex'
                 flexFlow={{ base: "column", md: "row" }}
-                // border='2px solid red'
                 justifyContent={{ base: "center", md: "right" }}
                 w="100%"
                 h={{ base: "1200px", md: "91.5vh" }}
@@ -35,7 +34,6 @@ const Home = () => {
             >
                 <FilterBox />
                 <RequestList />
-
             </Box>
         </div>
     )

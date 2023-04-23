@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ChatBox from '../components/Chats/ChatBox';
 import MyChats from '../components/Chats/MyChats';
-import SideDrawer from '../components/Miscellaneous/SideDrawer';
+import SideDrawer from '../components/Miscellaneous/Header';
 
 const Chat = () => {
     const navigate = useNavigate();
