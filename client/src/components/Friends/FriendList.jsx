@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setChats, setSelectedChat } from '../../State/ChatSlice'
 import { setFriends } from '../../State/FriendSlice'
+import ProfileModal from '../Miscellaneous/ProfileModal'
 
 const FriendList = () => {
     const token = useSelector((state) => state.user.token)
@@ -15,8 +16,6 @@ const FriendList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const toast = useToast();
-
-    const [loadingChat, setLoadingChat] = useState(false);
 
     const getUserFriends = async () => {
         try {
@@ -36,7 +35,7 @@ const FriendList = () => {
 
     useEffect(() => {
         getUserFriends();
-    }, [friends])
+    }, [])
 
     const disConnectUser = async (friendId) => {
         try {
@@ -74,8 +73,6 @@ const FriendList = () => {
 
     const accessChat = async (userId) => {
         try {
-            setLoadingChat(true);
-
             const config = {
                 headers: {
                     "Content-type": "application/json",
@@ -95,7 +92,6 @@ const FriendList = () => {
 
             navigate("/chats")
             dispatch(setSelectedChat(data));
-            setLoadingChat(false);
         } catch (error) {
             toast({
                 title: "Error fetching the chat",
@@ -144,11 +140,13 @@ const FriendList = () => {
                             border={'1px solid black'}
                         >
                             <Flex spacing='4'>
-                                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                    <Avatar name={friend.name} src={friend.pic} />
+                                <Flex flex='1' gap='2' alignItems='center' flexWrap='wrap'>
+                                    <ProfileModal user={friend}>
+                                        <Avatar name={friend.name} src={friend.pic} cursor={'pointer'} />
+                                    </ProfileModal>
 
                                     <Box>
-                                        <Heading size='sm'>{friend.name}</Heading>
+                                        <Text as='b' noOfLines={1}>{friend.name}</Text>
                                         <Text fontSize={'xs'}>{friend.headline}</Text>
                                     </Box>
                                 </Flex>
@@ -163,8 +161,8 @@ const FriendList = () => {
                                     }}
                                     icon={<ChatIcon />}
                                     onClick={() => accessChat(friend._id)}
-                                    isLoading={loadingChat}
                                 />
+
                                 <IconButton
                                     mt={1}
                                     variant='ghost'
