@@ -19,8 +19,6 @@ const LikeComment = ({ name, users, count }) => {
                 <Stack overflowY="scroll">
                     {users.map((user) => (
                         <Box
-                            // display="flex"
-                            // justifyContent="space-between"
                             bg={"#E8E8E8"}
                             color={"black"}
                             px={3}
