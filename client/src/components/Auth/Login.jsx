@@ -51,7 +51,7 @@ const Login = () => {
             toast({
                 title: data.msg,
                 status: "success",
-                duration: 5000,
+                duration: 2000,
                 isClosable: true,
                 position: "bottom"
             });
@@ -68,9 +68,9 @@ const Login = () => {
 
         } catch (err) {
             toast({
-                title: "Error Occured!",
+                title: err.response.data,
                 status: "error",
-                duration: 5000,
+                duration: 2000,
                 isClosable: true,
                 position: "bottom"
             });
@@ -84,6 +84,7 @@ const Login = () => {
                 <FormLabel>Email</FormLabel>
                 <Input
                     placeholder="Enter your Email"
+                    autoComplete="off"
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </FormControl>

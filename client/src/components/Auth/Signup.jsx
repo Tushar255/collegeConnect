@@ -128,9 +128,10 @@ const Signup = () => {
     return (
         <VStack spacing="5px">
             <Box display="flex" justifyContent={"space-between"} w="100%">
-                <FormControl id="first-name" isRequired>
+                <FormControl id="name" isRequired>
                     <FormLabel>Name</FormLabel>
                     <Input
+                        autoComplete="off"
                         w="90%"
                         placeholder="Enter your Name"
                         onChange={(e) => setName(e.target.value)}
@@ -139,6 +140,7 @@ const Signup = () => {
                 <FormControl id="college" isRequired>
                     <FormLabel>College</FormLabel>
                     <Input
+                        autoComplete="off"
                         w="90%"
                         placeholder="Enter your College"
                         onChange={(e) => setCollege(e.target.value)}
@@ -148,6 +150,7 @@ const Signup = () => {
             <FormControl id="email" isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
+                    autoComplete="off"
                     placeholder="Enter your Email"
                     onChange={(e) => setEmail(e.target.value)}
                 />
